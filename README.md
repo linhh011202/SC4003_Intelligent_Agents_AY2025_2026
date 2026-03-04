@@ -35,9 +35,7 @@ This project implements the core requirements for SC4003 Assignment 1 and is now
 
 ## Assumption Used
 
-Reward cells are modeled as absorbing terminal states where the reward is received on entry. After entering a terminal state, no future reward is collected, so terminal utilities remain `0.0`.
-
-This choice is consistent with the assignment style used in the referenced repos and keeps both algorithms internally consistent.
+The reward model follows the AIMA textbook (Eq. 17.5): `R(s)` is the immediate reward for being in state `s`, and the Bellman equation is `U(s) = R(s) + γ max_a Σ P(s'|s,a) U(s')`. There are no terminal states; green and brown cells are revisitable.
 
 ## Setup
 

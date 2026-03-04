@@ -154,7 +154,7 @@ def write_report(root: Path, part1_summary: dict | None, part2_summary: dict | N
         "If a move hits a wall or the boundary, the agent stays in the same state. "
         "A crucial detail from the assignment is that there are no terminal states, so green and brown cells remain revisitable. "
         "Value Iteration updates every non-wall state with the Bellman optimality equation "
-        r"$U_{k+1}(s)=\max_a \sum_{s'} P(s' \mid s,a)\left[R(s,a,s')+\gamma U_k(s')\right]$ "
+        r"$U_{k+1}(s)=R(s)+\gamma\max_a \sum_{s'} P(s' \mid s,a)\, U_k(s')$ "
         "until the change between two consecutive sweeps is below the stopping threshold."
     )
 
@@ -162,7 +162,7 @@ def write_report(root: Path, part1_summary: dict | None, part2_summary: dict | N
         "Policy Iteration uses the same MDP model as Value Iteration. "
         "It starts from an initial policy, repeatedly evaluates the current policy, and then improves it greedily using the updated utilities. "
         "Policy evaluation is implemented by iterative sweeps using "
-        r"$U^{\pi}(s)=\sum_{s'} P(s' \mid s,\pi(s))\left[R(s,\pi(s),s')+\gamma U^{\pi}(s')\right]$, "
+        r"$U^{\pi}(s)=R(s)+\gamma\sum_{s'} P(s' \mid s,\pi(s))\, U^{\pi}(s')$, "
         "and policy improvement replaces the current action with the action that gives the highest expected return. "
         "Because there are no terminal states, the policy is defined for every non-wall cell, including green and brown reward cells."
     )

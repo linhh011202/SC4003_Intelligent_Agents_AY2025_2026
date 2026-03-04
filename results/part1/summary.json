@@ -2,18 +2,18 @@
   "config": "config/base.yaml",
   "value_iteration": {
     "iterations": 1375,
-    "runtime_ms": 307.915,
-    "mean_utility": 94.049345,
+    "runtime_ms": 317.235,
+    "mean_utility": 93.108851,
     "delta": 1.006369316769451e-06
   },
   "policy_iteration": {
-    "iterations": 2810,
-    "runtime_ms": 156.465,
-    "mean_utility": 94.049445,
-    "delta": 6.677930031173673e-07
+    "iterations": 2809,
+    "runtime_ms": 170.041,
+    "mean_utility": 93.10895,
+    "delta": 6.611150809021638e-07
   },
   "comparison": {
-    "max_utility_diff": 9.963050571570875e-05,
+    "max_utility_diff": 9.963050517569627e-05,
     "policy_mismatches": 0
   }
 }

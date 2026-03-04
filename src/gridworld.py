@@ -117,11 +117,11 @@ class GridWorld:
             merged[next_state] = merged.get(next_state, 0.0) + probability
         return sorted(merged.items())
 
-    def reward(self, state: State, action: Action, next_state: State) -> float:
+    def reward(self, state: State) -> float:
         if self.is_terminal(state):
             return 0.0
-        if next_state in self.rewards:
-            return self.rewards[next_state]
+        if state in self.rewards:
+            return self.rewards[state]
         return self.step_reward
 
     def expected_action_value(
@@ -130,12 +130,11 @@ class GridWorld:
         action: Action,
         utilities: Dict[State, float],
     ) -> float:
+        r = self.reward(state)
         total = 0.0
         for next_state, probability in self.next_states_and_probs(state, action):
-            total += probability * (
-                self.reward(state, action, next_state) + self.gamma * utilities[next_state]
-            )
-        return total
+            total += probability * utilities[next_state]
+        return r + self.gamma * total
 
     def mean_utility(self, utilities: Dict[State, float]) -> float:
         states = self.get_states()

@@ -1,0 +1,23 @@
+{
+  "rows": 6,
+  "cols": 6,
+  "walls": [[0, 1], [1, 4], [4, 1], [4, 2], [4, 3]],
+  "terminal_states": [],
+  "rewards": [
+    {"state": [0, 0], "value": 1.0},
+    {"state": [0, 2], "value": 1.0},
+    {"state": [0, 5], "value": 1.0},
+    {"state": [1, 3], "value": 1.0},
+    {"state": [2, 4], "value": 1.0},
+    {"state": [3, 5], "value": 1.0},
+    {"state": [1, 1], "value": -1.0},
+    {"state": [1, 5], "value": -1.0},
+    {"state": [2, 2], "value": -1.0},
+    {"state": [3, 3], "value": -1.0},
+    {"state": [4, 4], "value": -1.0}
+  ],
+  "p_forward": 0.8,
+  "gamma": 0.99,
+  "step_reward": -0.05,
+  "start_state": [5, 0]
+}

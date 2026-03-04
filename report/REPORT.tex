@@ -1,0 +1,201 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{float}
+
+\title{SC4003 Assignment 1 Report}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+
+\section{Problem setup}
+The base maze used in Part 1 is shown in Figure~\ref{fig:base_maze}. The discount factor is fixed at 0.99, exactly as required by the assignment.
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.68\textwidth]{results/part1/maze.png}
+\caption{Assignment maze used for Part 1. Green cells have reward +1, brown cells have reward -1, white cells have reward -0.05, and gray cells are walls.}
+\label{fig:base_maze}
+\end{figure}
+
+
+\section{Using method of value iteration for Part 1}
+
+\subsection{Descriptions of implemented solutions}
+The assignment maze is a 6x6 grid with 5 walls, 6 green reward cells (+1), 5 brown reward cells (-1), and white cells with reward -0.05. The agent has four actions: up, right, down, and left. The intended move happens with probability 0.8, and the two perpendicular moves each happen with probability 0.1. If a move hits a wall or the boundary, the agent stays in the same state. A crucial detail from the assignment is that there are no terminal states, so green and brown cells remain revisitable. Value Iteration updates every non-wall state with the Bellman optimality equation $U_{k+1}(s)=\max_a \sum_{s'} P(s' \mid s,a)\left[R(s,a,s')+\gamma U_k(s')\right]$ until the change between two consecutive sweeps is below the stopping threshold.
+
+\subsection{Plot of optimal policy}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.82\textwidth]{results/part1/value\_iteration\_policy.png}
+\caption{Optimal policy produced by Value Iteration.}
+\label{fig:value_iteration_policy}
+\end{figure}
+
+The policy points toward repeatedly collecting high reward while avoiding paths that make accidental moves into brown cells more likely. This matches the assignment requirement to display the optimal policy for all non-wall states.
+
+\subsection{Utilities of all states}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.82\textwidth]{results/part1/value\_iteration\_utility.png}
+\caption{Utility heatmap for Value Iteration. Each number is the utility of a non-wall state. Green and brown reward cells are revisitable states, not terminal states.}
+\label{fig:value_iteration_utilities}
+\end{figure}
+
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{cccccc}
+99.999900 & WALL & 94.969143 & 94.836046 & 93.591206 & 93.215857 \\
+99.424724 & 97.846025 & 95.521592 & 94.310269 & WALL & 92.801693 \\
+97.951464 & 96.564528 & 95.208038 & 94.125258 & 92.989195 & 92.718301 \\
+96.529158 & 95.406194 & 94.164595 & 93.000559 & 92.737989 & 91.752446 \\
+95.263207 & WALL & WALL & WALL & 91.408194 & 91.467645 \\
+93.860878 & 92.628197 & 91.410887 & 90.208755 & 89.443234 & 90.174532 \\
+\end{tabular}
+\caption{Utility values for Value Iteration.}
+\label{tab:value_iteration_utilities}
+\end{table}
+
+These utilities are much larger than the immediate rewards because the assignment uses an infinite-horizon discounted process with no terminal states. A state is valuable not only for its next reward, but also for how well it can lead the agent back to green cells repeatedly.
+
+\subsection{Plot of utility estimates as a function of the number of iterations}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.82\textwidth]{results/part1/value\_iteration\_utility\_estimates.png}
+\caption{Utility estimate of every non-wall state versus iteration for Value Iteration. Total iterations: 1375. Runtime: 307.915 ms.}
+\label{fig:value_iteration_estimate}
+\end{figure}
+
+The curves flatten out near the end of the plot, which is the practical sign that the utility estimates have converged.
+
+\section{Using method of policy iteration for Part 1}
+
+\subsection{Descriptions of implemented solutions}
+Policy Iteration uses the same MDP model as Value Iteration. It starts from an initial policy, repeatedly evaluates the current policy, and then improves it greedily using the updated utilities. Policy evaluation is implemented by iterative sweeps using $U^{\pi}(s)=\sum_{s'} P(s' \mid s,\pi(s))\left[R(s,\pi(s),s')+\gamma U^{\pi}(s')\right]$, and policy improvement replaces the current action with the action that gives the highest expected return. Because there are no terminal states, the policy is defined for every non-wall cell, including green and brown reward cells.
+
+\subsection{Plot of optimal policy}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.82\textwidth]{results/part1/policy\_iteration\_policy.png}
+\caption{Optimal policy produced by Policy Iteration.}
+\label{fig:policy_iteration_policy}
+\end{figure}
+
+The final policy produced by Policy Iteration matches the one from Value Iteration. This agreement is expected because both algorithms solve the same discounted MDP.
+
+\subsection{Utilities of all states}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.82\textwidth]{results/part1/policy\_iteration\_utility.png}
+\caption{Utility heatmap for Policy Iteration. Each number is the utility of a non-wall state. Green and brown reward cells are revisitable states, not terminal states.}
+\label{fig:policy_iteration_utilities}
+\end{figure}
+
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{cccccc}
+100.000000 & WALL & 94.969243 & 94.836145 & 93.591306 & 93.215955 \\
+99.424824 & 97.846125 & 95.521692 & 94.310369 & WALL & 92.801791 \\
+97.951564 & 96.564628 & 95.208137 & 94.125358 & 92.989294 & 92.718400 \\
+96.529258 & 95.406293 & 94.164695 & 93.000659 & 92.738088 & 91.752546 \\
+95.263307 & WALL & WALL & WALL & 91.408293 & 91.467744 \\
+93.860977 & 92.628297 & 91.410986 & 90.208854 & 89.443333 & 90.174631 \\
+\end{tabular}
+\caption{Utility values for Policy Iteration.}
+\label{tab:policy_iteration_utilities}
+\end{table}
+
+The utility magnitudes are almost identical to those from Value Iteration, which confirms that the two methods converged to the same solution for Part 1.
+
+\subsection{Plot of utility estimates as a function of the number of iterations}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.82\textwidth]{results/part1/policy\_iteration\_utility\_estimates.png}
+\caption{Utility estimate of every non-wall state versus iteration for Policy Iteration. Total iterations: 2810. Runtime: 156.465 ms.}
+\label{fig:policy_iteration_estimate}
+\end{figure}
+
+The curves flatten out near the end of the plot, which is the practical sign that the utility estimates have converged.
+
+\section{Source code for Part 1}
+\begin{itemize}
+  \item Environment model: \texttt{src/gridworld.py}
+  \item Value Iteration: \texttt{src/value\_iteration.py}
+  \item Policy Iteration: \texttt{src/policy\_iteration.py}
+  \item Visualization: \texttt{src/visualization.py}
+  \item CLI entrypoint: \texttt{main.py}
+\end{itemize}
+The code follows the report structure directly: the environment model defines the MDP, the two algorithm files implement Value Iteration and Policy Iteration, and the plotting/report code exports the policy plots, utility tables, and convergence figures required in the assignment.
+
+\section{Part 2 questions}
+
+\subsection{Complicated maze design}
+For Part 2, I designed a family of larger mazes instead of changing only one map manually. Starting from size 7 and increasing to size 17, each generated maze contains more white states, more walls, and more positive/negative reward cells. The same transition model as Part 1 is kept, and the random seed is fixed at 42 so that the experiments are reproducible.
+
+\subsection{How do the number of states and the complexity of the environment affect convergence?}
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{rrrrrrr}
+\toprule
+Size & VI Iter & PI Iter & VI Runtime & PI Runtime & VI Mean Utility & Mismatch \\
+\midrule
+7 & 1375 & 2505 & 376.27 & 181.199 & 92.407394 & 0 \\
+9 & 1361 & 3402 & 687.324 & 442.225 & 78.909978 & 0 \\
+11 & 1361 & 2830 & 1023.675 & 550.358 & 75.980002 & 0 \\
+13 & 1375 & 2936 & 1474.54 & 844.812 & 85.823608 & 0 \\
+15 & 1361 & 5102 & 1939.654 & 1958.552 & 74.638951 & 0 \\
+17 & 1361 & 5531 & 2558.762 & 2700.895 & 73.871966 & 0 \\
+\bottomrule
+\end{tabular}
+\caption{Part 2 comparison across generated mazes.}
+\label{tab:part2_results}
+\end{table}
+
+Table~\ref{tab:part2_results} and the plots below show a clear trend: when the maze gets larger, both algorithms need more computation before the utilities stabilize. Value Iteration usually needs more repeated Bellman sweeps over the whole state space. Policy Iteration often reaches a stable policy with a different update pattern, but its evaluation stage is more expensive per round, so its runtime is not automatically lower.
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.82\textwidth]{results/part2/iterations\_vs\_size.png}
+\caption{Iterations required by each method as maze size increases.}
+\label{fig:part2_iterations}
+\end{figure}
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.82\textwidth]{results/part2/runtime\_vs\_size.png}
+\caption{Runtime comparison as maze size increases.}
+\label{fig:part2_runtime}
+\end{figure}
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.82\textwidth]{results/part2/mean\_utility\_vs\_size.png}
+\caption{Mean utility comparison as maze size increases.}
+\label{fig:part2_utility}
+\end{figure}
+
+
+\subsection{How complex can the environment be while still learning the right policy?}
+In this implementation, both algorithms still converged and produced the same final policy for every tested maze size from 7 to 17. Therefore, within the tested range, the largest environment that still learned a matching optimal policy was the 17x17 maze. The policy mismatch column in Table~\ref{tab:part2_results} is zero for every run, which is the main evidence used here.
+
+
+\end{document}

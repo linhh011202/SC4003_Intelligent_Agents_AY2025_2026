@@ -1,0 +1,73 @@
+{
+  "seed": 42,
+  "sizes": [
+    7,
+    9,
+    11,
+    13,
+    15,
+    17
+  ],
+  "rows": [
+    {
+      "maze_size": 7,
+      "value_iteration_iterations": 1375,
+      "value_iteration_runtime_ms": 376.27,
+      "value_iteration_mean_utility": 92.407394,
+      "policy_iteration_iterations": 2505,
+      "policy_iteration_runtime_ms": 181.199,
+      "policy_iteration_mean_utility": 92.407493,
+      "policy_mismatches": 0
+    },
+    {
+      "maze_size": 9,
+      "value_iteration_iterations": 1361,
+      "value_iteration_runtime_ms": 687.324,
+      "value_iteration_mean_utility": 78.909978,
+      "policy_iteration_iterations": 3402,
+      "policy_iteration_runtime_ms": 442.225,
+      "policy_iteration_mean_utility": 78.910018,
+      "policy_mismatches": 0
+    },
+    {
+      "maze_size": 11,
+      "value_iteration_iterations": 1361,
+      "value_iteration_runtime_ms": 1023.675,
+      "value_iteration_mean_utility": 75.980002,
+      "policy_iteration_iterations": 2830,
+      "policy_iteration_runtime_ms": 550.358,
+      "policy_iteration_mean_utility": 75.980094,
+      "policy_mismatches": 0
+    },
+    {
+      "maze_size": 13,
+      "value_iteration_iterations": 1375,
+      "value_iteration_runtime_ms": 1474.54,
+      "value_iteration_mean_utility": 85.823608,
+      "policy_iteration_iterations": 2936,
+      "policy_iteration_runtime_ms": 844.812,
+      "policy_iteration_mean_utility": 85.823704,
+      "policy_mismatches": 0
+    },
+    {
+      "maze_size": 15,
+      "value_iteration_iterations": 1361,
+      "value_iteration_runtime_ms": 1939.654,
+      "value_iteration_mean_utility": 74.638951,
+      "policy_iteration_iterations": 5102,
+      "policy_iteration_runtime_ms": 1958.552,
+      "policy_iteration_mean_utility": 74.639041,
+      "policy_mismatches": 0
+    },
+    {
+      "maze_size": 17,
+      "value_iteration_iterations": 1361,
+      "value_iteration_runtime_ms": 2558.762,
+      "value_iteration_mean_utility": 73.871966,
+      "policy_iteration_iterations": 5531,
+      "policy_iteration_runtime_ms": 2700.895,
+      "policy_iteration_mean_utility": 73.872055,
+      "policy_mismatches": 0
+    }
+  ]
+}

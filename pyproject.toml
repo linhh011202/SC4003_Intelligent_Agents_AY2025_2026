@@ -1,0 +1,18 @@
+[project]
+name = "assignment-1-mdp-maze"
+version = "0.1.0"
+description = "SC4003 Assignment 1: MDP maze solver with notebook-based visualization"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "matplotlib>=3.10.1",
+]
+
+[dependency-groups]
+dev = [
+  "ipykernel>=6.29.5",
+  "notebook>=7.4.0",
+]
+
+[tool.uv]
+package = false
